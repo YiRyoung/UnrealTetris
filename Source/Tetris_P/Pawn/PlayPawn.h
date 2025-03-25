@@ -4,10 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "InputAction.h"
-#include "InputMappingContext.h"
 #include "Actor/TetrisBlock.h"
-#include "Actor/TetrisBoard.h"
 #include "PlayPawn.generated.h"
 
 UCLASS()
@@ -31,17 +28,30 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Spawn")
-	FVector SpawnPos;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UInputMappingContext* MappingContext;
+	class UInputMappingContext* MappingContext;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ATetrisBlock* CurrentBlock;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ATetrisBoard> TetrisBoardBlueprint;
 
-	int SetBlockType();
+	UPROPERTY()
+	class ATetrisBoard* TetrisBoard;
 
-	void SpawnBlock();
+	UPROPERTY()
+	FVector SpawnPos = FVector({ -UGlobal::GetBlockSize() * ((UGlobal::GetRows() * 0.5f) - 4), 0.0f, 0.0f });
 
+	void InitializeGame();
+
+private:
+	FBlockLogic CurrentBlock;
+
+	EBlockType SetBlockType()
+	{
+		int TypeNum = FMath::RandRange(0, 6);
+		return static_cast<EBlockType>(TypeNum);
+	}
+
+	void SpawnLogicBlock();
+
+	void PrintBlockWorldPos();
 };

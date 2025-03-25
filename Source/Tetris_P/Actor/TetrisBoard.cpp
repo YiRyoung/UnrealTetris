@@ -2,18 +2,14 @@
 
 
 #include "TetrisBoard.h"
+#include "TetrisBlock.h"
+#include "Global/Global.h"
 
 // Sets default values
 ATetrisBoard::ATetrisBoard()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	ConstructorHelpers::FClassFinder<AActor> BoundaryBlockBP(TEXT("/Game/Blueprints/BP_BoundaryBlock"));
-	if (BoundaryBlockBP.Succeeded())
-	{
-		BoundaryBlockClass = BoundaryBlockBP.Class;
-	}
 }
 
 // Called when the game starts or when spawned
@@ -21,8 +17,6 @@ void ATetrisBoard::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitBoard();
-	DrawOutLine(GetWorld(), Rows, Columns, UGlobal::GetBlockSize());
 }
 
 void ATetrisBoard::InitBoard()
@@ -36,6 +30,8 @@ void ATetrisBoard::InitBoard()
 			Board[Row][Col] = 0;
 		}
 	}
+
+	DrawOutLine(GetWorld(), Rows, Columns, UGlobal::GetBlockSize());
 }
 
 void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
@@ -55,17 +51,17 @@ void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 
 	for (int j = 0; j <= Column + 1; ++j)
 	{
-		FVector TopPosition = BoardCenter + FVector(0, j * Size, 0.0f);
+		//FVector TopPosition = BoardCenter + FVector(0, j * Size, 0.0f);
 		FVector BottomPosition = BoardCenter + FVector((Row + 1) * Size, j * Size, 0.0f);
 
-		World->SpawnActor<AActor>(BoundaryBlockClass, TopPosition, FRotator::ZeroRotator);
+		//World->SpawnActor<AActor>(BoundaryBlockClass, TopPosition, FRotator::ZeroRotator);
 		World->SpawnActor<AActor>(BoundaryBlockClass, BottomPosition, FRotator::ZeroRotator);
 	}
 }
 
 FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
 {
-	float StartX = -(Rows / 2.0f) * UGlobal::GetBlockSize();
+	float StartX = -((Rows + 2) / 2.0f) * UGlobal::GetBlockSize();
 	float StartY = -(Columns / 2.0f) * UGlobal::GetBlockSize();
 	return FVector(StartX, StartY, 0.0f);
 }
