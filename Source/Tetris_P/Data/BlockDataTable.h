@@ -14,7 +14,6 @@ struct FBlockDataRow : public FTableRowBase
 	FBlockDataRow() {}
 	~FBlockDataRow() {}
 
-public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BlockShape")
 	UStaticMesh* Shape = nullptr;
 };

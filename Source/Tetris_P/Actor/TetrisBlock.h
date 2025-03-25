@@ -4,18 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Global/Global.h"
 #include "TetrisBlock.generated.h"
+
+USTRUCT(BlueprintType)
+struct FBlockLogic
+{
+	GENERATED_BODY()
+
+	FVector2D Pivot;
+	TArray<FVector2D> RelativeCells;
+};
 
 UENUM(BlueprintType)
 enum class  EBlockType : uint8
 {
-	I,
-	J,
-	L,
-	O,
-	S,
-	T,
-	Z
+	I_BLOCK,
+	J_BLOCK,
+	L_BLOCK,
+	O_BLOCK,
+	S_BLOCK,
+	T_BLOCK,
+	Z_BLOCK
 };
 
 UCLASS()
@@ -36,11 +46,17 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "BlockSize")
+	float BlockSize = UGlobal::GetBlockSize();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BlockType")
-	EBlockType BlockType;
+	EBlockType BlockType = EBlockType::I_BLOCK;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BlockType")
 	UStaticMeshComponent* MeshComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BlockLogic")
+	FBlockLogic LogicData;
 
-	void InitBlock();
+	void InitLogicBlock(int TypeCase);
+	void InitVisualBlock(int TypeCase);
 };

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "TetrisBlock.h"
+#include "Global/Global.h"
 #include "TetrisBoard.generated.h"
 
 UCLASS()
@@ -22,15 +24,12 @@ protected:
 public:
 	UPROPERTY(EditAnywhere, Category = "Block")
 	TSubclassOf<AActor> BoundaryBlockClass;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Block")
-	float BlockSize = 2000.0f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Board")
-	int Rows = 20;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Board")
+	int Rows = UGlobal::GetRows();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Board")
-	int Columns = 10;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Board")
+	int Columns = UGlobal::GetColumns();
 
 	void InitBoard();
 

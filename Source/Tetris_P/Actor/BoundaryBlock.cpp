@@ -18,6 +18,12 @@ ABoundaryBlock::ABoundaryBlock()
 	{
 		BoundaryBlock->SetStaticMesh(BlockMesh);
 	}
+
+	UMaterial* BlockMat = LoadObject<UMaterial>(nullptr, *Mat);
+	if (BlockMat)
+	{
+		BoundaryBlock->SetMaterial(0, BlockMat);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -25,10 +31,6 @@ void ABoundaryBlock::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if (Mat)
-	{
-		BoundaryBlock->SetMaterial(0, Mat);
-	}
 }
 
 // Called every frame

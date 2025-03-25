@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Global/Global.h"
 #include "BoundaryBlock.generated.h"
 
 UCLASS()
@@ -29,6 +28,6 @@ public:
 	UStaticMeshComponent* BoundaryBlock;
 
 private:
-	UMaterialInterface* Mat = UGlobal::GetMaterial("Boundary");
+	FString Mat = TEXT("/Game/Resources/Block/MAT_Boundary.MAT_Boundary");
 	FString Block = TEXT("/Game/Resources/Block/Block.Block");
 };

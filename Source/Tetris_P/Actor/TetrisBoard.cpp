@@ -22,9 +22,7 @@ void ATetrisBoard::BeginPlay()
 	Super::BeginPlay();
 
 	InitBoard();
-	DrawOutLine(GetWorld(), Rows, Columns, BlockSize);
-
-
+	DrawOutLine(GetWorld(), Rows, Columns, UGlobal::GetBlockSize());
 }
 
 void ATetrisBoard::InitBoard()
@@ -44,7 +42,7 @@ void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 {
 	if (!BoundaryBlockClass) { return; }
 
-	FVector BoardCenter = CalculateBoardCenter(Rows, Columns, BlockSize);
+	FVector BoardCenter = CalculateBoardCenter(Rows, Columns, UGlobal::GetBlockSize());
 
 	for (int i = 0; i <= Row + 1; ++i)
 	{
@@ -67,8 +65,8 @@ void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 
 FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
 {
-	float StartX = -(Rows / 2.0f) * BlockSize;
-	float StartY = -(Columns / 2.0f) * BlockSize;
+	float StartX = -(Rows / 2.0f) * UGlobal::GetBlockSize();
+	float StartY = -(Columns / 2.0f) * UGlobal::GetBlockSize();
 	return FVector(StartX, StartY, 0.0f);
 }
 
