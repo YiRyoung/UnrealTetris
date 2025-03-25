@@ -46,24 +46,23 @@ void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 
 	FVector BoardCenter = CalculateBoardCenter(Rows, Columns, BlockSize);
 
-	for (int i = 0; i <= Rows; ++i)
+	for (int i = 0; i <= Row + 1; ++i)
 	{
-		FVector LeftPosition = BoardCenter + FVector(i * BlockSize, 0.0f, 0.0f);
-		FVector RightPosition = BoardCenter + FVector(i * BlockSize, Columns * BlockSize, 0.0f);
+		FVector LeftPosition = BoardCenter + FVector(i * Size, 0, 0.0f);
+		FVector RightPosition = BoardCenter + FVector(i * Size, (Column + 1) * Size, 0.0f);
 
 		World->SpawnActor<AActor>(BoundaryBlockClass, LeftPosition, FRotator::ZeroRotator);
 		World->SpawnActor<AActor>(BoundaryBlockClass, RightPosition, FRotator::ZeroRotator);
 	}
 
-	for (int j = 0; j <= Columns; ++j)
+	for (int j = 0; j <= Column + 1; ++j)
 	{
-		FVector TopPosition = BoardCenter + FVector(0.0f, j * BlockSize, 0.0f);
-		FVector BottomPosition = BoardCenter + FVector(Rows * BlockSize, j * BlockSize, 0.0f);
+		FVector TopPosition = BoardCenter + FVector(0, j * Size, 0.0f);
+		FVector BottomPosition = BoardCenter + FVector((Row + 1) * Size, j * Size, 0.0f);
 
 		World->SpawnActor<AActor>(BoundaryBlockClass, TopPosition, FRotator::ZeroRotator);
 		World->SpawnActor<AActor>(BoundaryBlockClass, BottomPosition, FRotator::ZeroRotator);
 	}
-
 }
 
 FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
@@ -71,6 +70,5 @@ FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
 	float StartX = -(Rows / 2.0f) * BlockSize;
 	float StartY = -(Columns / 2.0f) * BlockSize;
 	return FVector(StartX, StartY, 0.0f);
-
 }
 

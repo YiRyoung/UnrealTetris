@@ -24,7 +24,7 @@ public:
 	TSubclassOf<AActor> BoundaryBlockClass;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Block")
-	float BlockSize = 85.0f;
+	float BlockSize = 2000.0f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Board")
 	int Rows = 20;

@@ -26,3 +26,18 @@ UMaterialInterface* UGlobal::GetMaterial(const FString& MatName)
 	UE_LOG(LogTemp, Warning, TEXT("Material %s not found in DataTable!"), *MatName);
 	return nullptr;
 }
+
+UStaticMesh* UGlobal::GetStaticMesh(const FString& BlockName)
+{
+	UDataTable* BlockDataTable = LoadObject<UDataTable>(nullptr, TEXT("/Game/Data/DT_BlockDataTable.DT_BlockDataTable"));
+	
+	if (!BlockDataTable)
+	{
+		UE_LOG(LogTemp, Fatal, TEXT("BlockDataTable not found!"));
+		return nullptr;
+	}
+
+	FName RowName = FName(*BlockName);
+	static const FString Context
+		return nullptr;
+}

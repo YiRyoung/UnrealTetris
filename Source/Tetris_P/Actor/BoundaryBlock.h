@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Global.h"
+#include "Global/Global.h"
 #include "BoundaryBlock.generated.h"
 
 UCLASS()
@@ -30,5 +30,5 @@ public:
 
 private:
 	UMaterialInterface* Mat = UGlobal::GetMaterial("Boundary");
-	FString Block = TEXT("/Game/Resources/box.box");
+	FString Block = TEXT("/Game/Resources/Block/Block.Block");
 };

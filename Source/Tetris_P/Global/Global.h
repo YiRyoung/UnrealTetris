@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/DataTable.h"
-#include "MaterialDataTable.h"
+#include "Data/MaterialDataTable.h"
+#include "Data/BlockDataTable.h"
 #include "Materials/MaterialInterface.h"
 #include "Global.generated.h"
 
@@ -20,4 +21,7 @@ class TETRIS_P_API UGlobal : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable)
 	static UMaterialInterface* GetMaterial(const FString& MatName);
+
+	UFUNCTION(BlueprintCallable)
+	static UStaticMesh* GetStaticMesh(const FString& BlockType);
 };
