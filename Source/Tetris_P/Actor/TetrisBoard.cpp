@@ -88,6 +88,11 @@ void ATetrisBoard::AddBlock(int X, int Y)
 	Board[X][Y] = 1;
 }
 
+void ATetrisBoard::AddLockBlock(int X, int Y)
+{
+	Board[X][Y] = 2;
+}
+
 void ATetrisBoard::DeleteBlock(int X, int Y)
 {
 	Board[X][Y] = 0;

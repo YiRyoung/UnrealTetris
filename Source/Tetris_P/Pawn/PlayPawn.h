@@ -85,4 +85,6 @@ private:
 	void UpdateVisualBlock();
 
 	void PrintBlockWorldPos();
+
+	void PickBlockOnBoard();
 };

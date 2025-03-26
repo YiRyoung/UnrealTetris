@@ -45,6 +45,7 @@ public:
 	}
 
 	void AddBlock(int X, int Y);
+	void AddLockBlock(int X, int Y);
 	void DeleteBlock(int X, int Y);
 
 private:
