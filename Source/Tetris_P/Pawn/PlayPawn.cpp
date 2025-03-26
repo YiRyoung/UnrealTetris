@@ -60,20 +60,34 @@ void APlayPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void APlayPawn::MoveLeft()
 {
-
     UE_LOG(LogTemp, Warning, TEXT("Input Left"));
+    FVector2D Offset(0, -1);
+    CurrentBlock.MoveByOffset(Offset);
+    UpdateVisualBlock();
+    UpdateBoard();
 }
 
 void APlayPawn::MoveRight()
 {
+    UE_LOG(LogTemp, Warning, TEXT("Input Right"));
+    FVector2D Offset(0, 1);
+    CurrentBlock.MoveByOffset(Offset);
+    UpdateVisualBlock();
+    UpdateBoard();
 }
 
 void APlayPawn::MoveDown()
 {
+    UE_LOG(LogTemp, Warning, TEXT("Input Down"));
+    FVector2D Offset(-1, 0);
+    CurrentBlock.MoveByOffset(Offset);
+    UpdateVisualBlock();
+    UpdateBoard();
 }
 
 void APlayPawn::Rotate()
 {
+    CurrentBlock.Rotate();
 }
 
 void APlayPawn::InitializeGame()
@@ -102,20 +116,37 @@ void APlayPawn::SpawnLogicBlock()
    UpdateBoard();
 }
 
+
+void APlayPawn::ClearPreviousBlockPos()
+{
+    TArray<FVector2D> PreviousWorldPositions = CurrentBlock.GetWorldCells();
+
+    for (const FVector2D& Position : PreviousWorldPositions)
+    {
+        int BoardX = -(Position.X - (UGlobal::BlockSize * ((UGlobal::Rows / 2) - 1))) / UGlobal::BlockSize;
+        int BoardY = (Position.Y + (UGlobal::BlockSize * ((UGlobal::Columns / 2) - 1))) / UGlobal::BlockSize;
+
+        TetrisBoard->DeleteBlock(BoardX, BoardY);
+        UE_LOG(LogTemp, Log, TEXT("Cleared Block at Previous Position: (%d, %d)"), BoardX, BoardY);
+    }
+}
+
 void APlayPawn::UpdateBoard()
 {
+    ClearPreviousBlockPos();
+
     TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
-    
+
     for (const FVector2D& Position : WorldPositions)
     {
         int BoardX = -(Position.X - (UGlobal::BlockSize * ((UGlobal::Rows / 2) - 1))) / UGlobal::BlockSize;
         int BoardY = (Position.Y + (UGlobal::BlockSize * ((UGlobal::Columns / 2) - 1))) / UGlobal::BlockSize;
 
-        UE_LOG(LogTemp, Log, TEXT("Block Cell at Board Position: (%d, %d)"), BoardX, BoardY);
         TetrisBoard->AddBlock(BoardX, BoardY);
-        TetrisBoard->DrawBoard();
+        UE_LOG(LogTemp, Log, TEXT("Updated Block at New Position: (%d, %d)"), BoardX, BoardY);
     }
 }
+
 
 void APlayPawn::SpawnVisualBlock()
 {
@@ -123,7 +154,26 @@ void APlayPawn::SpawnVisualBlock()
 
     for (const FVector2D& Position : WorldPositions)
     {
-        GetWorld()->SpawnActor<AActor>(PlayBlockBlueprint, FVector{Position.X, Position.Y, 0.0f}, FRotator::ZeroRotator);
+        AActor* VisualBlock = GetWorld()->SpawnActor<AActor>(PlayBlockBlueprint, FVector(Position.X, Position.Y, 0.0f), FRotator::ZeroRotator);
+
+        if (VisualBlock)
+        {
+            SpawnedVisualBlocks.Add(VisualBlock);
+        }
+    }
+}
+
+void APlayPawn::UpdateVisualBlock()
+{
+    TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
+
+    for (int i = 0; i < SpawnedVisualBlocks.Num(); ++i)
+    {
+        if (i < WorldPositions.Num() && SpawnedVisualBlocks[i])
+        {
+            FVector NewLocation = FVector(WorldPositions[i].X, WorldPositions[i].Y, 0.0f);
+            SpawnedVisualBlocks[i]->SetActorLocation(NewLocation);
+        }
     }
 }
 

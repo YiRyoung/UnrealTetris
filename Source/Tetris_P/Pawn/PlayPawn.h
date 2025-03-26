@@ -64,6 +64,7 @@ public:
 
 private:
 	FBlockLogic CurrentBlock;
+	TArray<AActor*> SpawnedVisualBlocks;
 
 	EBlockType SetBlockType()
 	{
@@ -73,9 +74,12 @@ private:
 
 	void SpawnLogicBlock();
 	
+	void ClearPreviousBlockPos();
 	void UpdateBoard();
 
 	void SpawnVisualBlock();
+
+	void UpdateVisualBlock();
 
 	void PrintBlockWorldPos();
 };

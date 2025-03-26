@@ -75,6 +75,14 @@ void FBlockLogic::InitializeLogic(EBlockType BlockType, FVector2D InitialPivot)
 	}
 }
 
+void FBlockLogic::MoveByOffset(const FVector2D& Offset)
+{
+	for (FVector2D& Cell : RelativeCells)
+	{
+		Cell += Offset;
+	}
+}
+
 bool FBlockLogic::CanMove(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board, FVector2D Direction)
 {
 	for (const FVector2D& Cell : BlockLogic.RelativeCells)

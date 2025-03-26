@@ -33,6 +33,8 @@ public:
 
 	void InitializeLogic(EBlockType BlockType, FVector2D InitialPivot);
 
+	void MoveByOffset(const FVector2D& Offset);
+
 	bool CanMove(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board, FVector2D Direction);
 	void Move(FVector2D Direction);
 
