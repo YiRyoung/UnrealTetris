@@ -38,6 +38,12 @@ public:
 	FVector CalculateBoardCenter(int Row, int Column, float Size);
 
 	void DrawBoard();
+
+	int GetBoardValue(int X, int Y) const
+	{
+		return Board[X][Y];
+	}
+
 	void AddBlock(int X, int Y);
 	void DeleteBlock(int X, int Y);
 

@@ -53,41 +53,34 @@ void APlayPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         EnhancedInputComponent->BindAction(IA_MoveDown, ETriggerEvent::Started, this, &APlayPawn::MoveDown);
         EnhancedInputComponent->BindAction(IA_Rotate, ETriggerEvent::Started, this, &APlayPawn::Rotate);
     }
+
 }
 
 bool APlayPawn::CanMove(const FVector2D& Offset) const
 {
-    TArray<FVector2D> CurrentWorldPositions = CurrentBlock.GetWorldCells();
-    TArray<FVector2D> NextWorldPositions;
+    TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
 
-    // 다음 위치 계산
-    for (const FVector2D& CurrentPosition : CurrentWorldPositions)
+    for (const FVector2D& Position : WorldPositions)
     {
-        FVector2D NextPosition = CurrentPosition + FVector2D(Offset.X * UGlobal::BlockSize, Offset.Y * UGlobal::BlockSize);
-        NextWorldPositions.Add(NextPosition);
-    }
+        FVector2D NextPosition = Position + FVector2D(Offset.X * UGlobal::BlockSize, Offset.Y * UGlobal::BlockSize);
 
-    // 다음 위치 검사
-    for (const FVector2D& NextPosition : NextWorldPositions)
-    {
         int BoardX = -(NextPosition.X - (UGlobal::BlockSize * ((UGlobal::Rows / 2) - 1))) / UGlobal::BlockSize;
         int BoardY = (NextPosition.Y + (UGlobal::BlockSize * ((UGlobal::Columns / 2) - 1))) / UGlobal::BlockSize;
 
-        // 보드 경계 검사
+        // 보드 경계 확인
         if (BoardX < 0 || BoardX >= UGlobal::Rows || BoardY < 0 || BoardY >= UGlobal::Columns)
         {
-            return false;
+            return false; // 보드 경계를 벗어남
         }
 
-        // 현재 위치는 제외하고 충돌 여부 확인
-        if (!CurrentWorldPositions.Contains(NextPosition) && TetrisBoard->GetBoardValue(BoardX, BoardY) == 1)
+        // 보드 상태 확인 (1이면 이동 불가)
+        if (TetrisBoard->GetBoardValue(BoardX, BoardY) == 1)
         {
             return false;
         }
     }
 
     return true; // 이동 가능
-
 }
 
 void APlayPawn::MoveLeft()

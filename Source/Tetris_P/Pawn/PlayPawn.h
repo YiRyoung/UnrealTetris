@@ -45,6 +45,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	UInputAction* IA_Rotate;
 
+	bool CanMove(const FVector2D& Offset) const;
+
 	void MoveLeft();
 	void MoveRight();
 	void MoveDown();
