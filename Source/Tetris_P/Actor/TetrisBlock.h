@@ -35,8 +35,7 @@ public:
 
 	void MoveByOffset(const FVector2D& Offset);
 
-	bool CanMove(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board, FVector2D Direction);
-	void Move(FVector2D Direction);
+
 
 	bool CanRotate(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board);
 	void Rotate();

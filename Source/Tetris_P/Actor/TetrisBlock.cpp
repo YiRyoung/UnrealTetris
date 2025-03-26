@@ -81,27 +81,13 @@ void FBlockLogic::MoveByOffset(const FVector2D& Offset)
 	{
 		Cell += Offset;
 	}
-}
 
-bool FBlockLogic::CanMove(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board, FVector2D Direction)
-{
-	for (const FVector2D& Cell : BlockLogic.RelativeCells)
+	TArray<FVector2D> WorldCells;
+	WorldCells = GetWorldCells();
+	for (FVector2D& Cell : WorldCells)
 	{
-		FVector2D NewWorldPos = BlockLogic.WorldPivot + Direction + (Cell - BlockLogic.RelativePivot);
-
-		if (NewWorldPos.X < 0 || NewWorldPos.X >= Board.Num() ||
-			NewWorldPos.Y < 0 || NewWorldPos.Y >= Board[0].Num() ||
-			Board[NewWorldPos.X][NewWorldPos.Y] != 0)
-		{
-			return false;
-		}
+		Cell += FVector2D(Offset.X * UGlobal::BlockSize, Offset.Y * UGlobal::BlockSize);
 	}
-	return true;
-}
-
-void FBlockLogic::Move(FVector2D Direction)
-{
-	WorldPivot += Direction;
 }
 
 bool FBlockLogic::CanRotate(const FBlockLogic& BlockLogic, const TArray<TArray<int32>>& Board)

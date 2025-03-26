@@ -68,22 +68,19 @@ FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
 
 void ATetrisBoard::DrawBoard()
 {
-	// 로그를 통해 보드의 현재 상태를 출력
 	UE_LOG(LogTemp, Log, TEXT("Current Board State:"));
 
-	for (int Row = 0; Row < Rows; ++Row) // 모든 행 순회
+	for (int Row = 0; Row < Rows; ++Row)
 	{
-		FString RowData; // 한 행의 데이터를 저장할 문자열
+		FString RowData;
 
-		for (int Col = 0; Col < Columns; ++Col) // 각 열 순회
+		for (int Col = 0; Col < Columns; ++Col)
 		{
-			RowData += FString::FromInt(Board[Row][Col]) + TEXT(" "); // 각 칸의 데이터를 추가
+			RowData += FString::FromInt(Board[Row][Col]) + TEXT(" ");
 		}
 
-		// 각 행 출력
 		UE_LOG(LogTemp, Log, TEXT("Row %d: %s"), Row, *RowData);
 	}
-
 }
 
 void ATetrisBoard::AddBlock(int X, int Y)

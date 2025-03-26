@@ -64,6 +64,7 @@ public:
 
 private:
 	FBlockLogic CurrentBlock;
+	TArray<FVector2D> PreviousWorldPositions;
 	TArray<AActor*> SpawnedVisualBlocks;
 
 	EBlockType SetBlockType()
