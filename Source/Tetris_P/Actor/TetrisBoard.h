@@ -37,6 +37,9 @@ public:
 
 	FVector CalculateBoardCenter(int Row, int Column, float Size);
 
+	void DrawBoard();
+	void AddBlock(int X, int Y);
+	void DeleteBlock(int X, int Y);
 private:
 	TArray<TArray<int>> Board;
 };

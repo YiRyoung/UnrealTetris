@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Actor/TetrisBlock.h"
+#include "InputMappingContext.h"
 #include "Global/Global.h"
 #include "PlayPawn.generated.h"
 
@@ -30,13 +31,31 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UInputMappingContext* MappingContext;
+	UInputMappingContext* MappingContext;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ATetrisBoard> TetrisBoardBlueprint;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* IA_MoveLeft;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* IA_MoveRight;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* IA_MoveDown;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
+	UInputAction* IA_Rotate;
+
+	void MoveLeft();
+	void MoveRight();
+	void MoveDown();
+	void Rotate();
+
+	// Board & Block
 	UPROPERTY()
 	class ATetrisBoard* TetrisBoard;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ATetrisBoard> TetrisBoardBlueprint;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class APlayBlock> PlayBlockBlueprint;
@@ -54,8 +73,7 @@ private:
 
 	void SpawnLogicBlock();
 	
-	void ConvertBoardPos();
-	// void UpdateBoard();
+	void UpdateBoard();
 
 	void SpawnVisualBlock();
 
