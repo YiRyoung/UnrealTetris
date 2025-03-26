@@ -17,24 +17,7 @@ class TETRIS_P_API UGlobal : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable)
-	static int GetRows()
-	{
-		return 20;
-	}
-	
-	UFUNCTION(BlueprintCallable)
-	static int GetColumns()
-	{
-		return 10;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	static float GetBlockSize() 
-	{ 
-		return 87.0f;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	static UStaticMesh* GetBlockMesh(const FString& BlockType);
+	static int Rows;
+	static int Columns;
+	static float BlockSize;
 };

@@ -57,32 +57,15 @@ void APlayPawn::SpawnLogicBlock()
    EBlockType CurType = SetBlockType();
    FVector2D InitialPivot = { UGlobal::BlockSize * ((UGlobal::Rows * 0.5f) - 1), 0.0f };
    CurrentBlock.InitializeLogic(CurType, InitialPivot);
-
-   PrintBlockWorldPos();
-   SpawnVisualBlock();
-   ConvertBoardPos();
 }
 
-void APlayPawn::ConvertBoardPos()
-{
-    TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
-    
-    for (const FVector2D& Position : WorldPositions)
-    {
-        float BoardX = -(Position.X - (UGlobal::BlockSize * ((UGlobal::Rows / 2) - 1))) / UGlobal::BlockSize;
-        float BoardY = (Position.Y + (UGlobal::BlockSize * ((UGlobal::Columns / 2) - 1))) / UGlobal::BlockSize;
-
-        UE_LOG(LogTemp, Log, TEXT("Block Cell at Board Position: (%f, %f)"), BoardX, BoardY);
-    }
-}
-
-void APlayPawn::SpawnVisualBlock()
+void APlayPawn::SpawnVisualBlock(UWorld* World)
 {
     TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
 
     for (const FVector2D& Position : WorldPositions)
     {
-        GetWorld()->SpawnActor<AActor>(PlayBlockBlueprint, FVector{Position.X, Position.Y, 0.0f}, FRotator::ZeroRotator);
+        World->SpawnActor<AActor>(PlayBlockBlueprint, FVector{Position.X, Position.Y, 0.0f}, FRotator::ZeroRotator);
     }
 }
 
@@ -90,8 +73,9 @@ void APlayPawn::PrintBlockWorldPos()
 {
     TArray<FVector2D> WorldPositions = CurrentBlock.GetWorldCells();
 
-    for (const FVector2D& Position_W : WorldPositions)
+    for (const FVector2D& Position : WorldPositions)
     {
-        UE_LOG(LogTemp, Log, TEXT("Block Cell at World Position: (%f, %f)"), Position_W.X, Position_W.Y);
+
+        UE_LOG(LogTemp, Log, TEXT("Block Cell at World Position: (%f, %f)"), Position.X, Position.Y);
     }
 }

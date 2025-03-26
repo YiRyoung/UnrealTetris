@@ -36,6 +36,7 @@ TArray<FVector2D> FBlockLogic::GetWorldCells() const
 	}
 
 	return WorldPositions;
+
 }
 
 void FBlockLogic::InitializeLogic(EBlockType BlockType, FVector2D InitialPivot)
@@ -46,11 +47,11 @@ void FBlockLogic::InitializeLogic(EBlockType BlockType, FVector2D InitialPivot)
 	{
 	case EBlockType::I_BLOCK:
 		RelativePivot = { 1, 1 };
-		RelativeCells = { {1, 0}, {1, 1}, {1, 2}, {1, 3} };
+		RelativeCells = { {0, 1}, {1, 1}, {2, 1}, {3, 1} };
 		break;
 	case EBlockType::O_BLOCK:
 		RelativePivot = { 1, 1 };
-		RelativeCells = { {0, 1}, {0, 2}, {1, 1}, {1, 2} };
+		RelativeCells = { {1, 1}, {1, 2}, {2, 1}, {2, 2} };
 		break;
 	case EBlockType::T_BLOCK:
 		RelativePivot = { 1, 1 };
@@ -58,11 +59,11 @@ void FBlockLogic::InitializeLogic(EBlockType BlockType, FVector2D InitialPivot)
 		break;
 	case EBlockType::S_BLOCK:
 		RelativePivot = { 1, 1 };
-		RelativeCells = { {0, 1}, {0, 2}, {1, 0}, {1, 1} };
+		RelativeCells = { {1, 1}, {1, 2}, {2, 0}, {2, 1} };
 		break;
 	case EBlockType::Z_BLOCK:
 		RelativePivot = { 1, 1 };
-		RelativeCells = { {0, 0}, {0, 1}, {1, 1}, {1, 2} };
+		RelativeCells = { {1, 0}, {1, 1}, {2, 1}, {2, 2} };
 		break;
 	case EBlockType::J_BLOCK:
 		RelativePivot = { 2, 1 };

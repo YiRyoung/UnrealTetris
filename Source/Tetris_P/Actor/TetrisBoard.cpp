@@ -31,14 +31,14 @@ void ATetrisBoard::InitBoard()
 		}
 	}
 
-	DrawOutLine(GetWorld(), Rows, Columns, UGlobal::GetBlockSize());
+	DrawOutLine(GetWorld(), Rows, Columns, UGlobal::BlockSize);
 }
 
 void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 {
 	if (!BoundaryBlockClass) { return; }
 
-	FVector BoardCenter = CalculateBoardCenter(Rows, Columns, UGlobal::GetBlockSize());
+	FVector BoardCenter = CalculateBoardCenter(Rows, Columns, UGlobal::BlockSize);
 
 	for (int i = 0; i <= Row + 1; ++i)
 	{
@@ -51,18 +51,18 @@ void ATetrisBoard::DrawOutLine(UWorld* World, int Row, int Column, float Size)
 
 	for (int j = 0; j <= Column + 1; ++j)
 	{
-		//FVector TopPosition = BoardCenter + FVector(0, j * Size, 0.0f);
-		FVector BottomPosition = BoardCenter + FVector((Row + 1) * Size, j * Size, 0.0f);
+		FVector BottomPosition = BoardCenter + FVector(0, j * Size, 0.0f);
+		FVector TopPosition = BoardCenter + FVector((Row + 1) * Size, j * Size, 0.0f);
 
-		//World->SpawnActor<AActor>(BoundaryBlockClass, TopPosition, FRotator::ZeroRotator);
+		World->SpawnActor<AActor>(BoundaryBlockClass, TopPosition, FRotator::ZeroRotator);
 		World->SpawnActor<AActor>(BoundaryBlockClass, BottomPosition, FRotator::ZeroRotator);
 	}
 }
 
 FVector ATetrisBoard::CalculateBoardCenter(int Row, int Column, float Size)
 {
-	float StartX = -((Rows + 2) / 2.0f) * UGlobal::GetBlockSize();
-	float StartY = -(Columns / 2.0f) * UGlobal::GetBlockSize();
+	float StartX = -((Rows + 2) / 2.0f) * UGlobal::BlockSize;
+	float StartY = -(Columns / 2.0f) * UGlobal::BlockSize;
 	return FVector(StartX, StartY, 0.0f);
 }
 

@@ -54,10 +54,9 @@ private:
 
 	void SpawnLogicBlock();
 	
-	void ConvertBoardPos();
 	// void UpdateBoard();
 
-	void SpawnVisualBlock();
+	void SpawnVisualBlock(UWorld* World);
 
 	void PrintBlockWorldPos();
 };

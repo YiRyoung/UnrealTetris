@@ -25,11 +25,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Block")
 	TSubclassOf<AActor> BoundaryBlockClass;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Board")
-	int Rows = UGlobal::GetRows();
+	UPROPERTY()
+	int Rows = UGlobal::Rows;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Board")
-	int Columns = UGlobal::GetColumns();
+	UPROPERTY()
+	int Columns = UGlobal::Columns;
 
 	void InitBoard();
 
